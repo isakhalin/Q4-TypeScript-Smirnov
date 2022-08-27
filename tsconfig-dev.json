@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json", //Путь до конфиг файла, от которого мы расширяемся
+  "compilerOptions": {          //Перезаисываем свойства compilerOptions
+    "watch": true,              //Позволяет следить за изменениями и пересобирать билд
+    "inlineSourceMap": true,
+    "inlineSources": true
+  }
+}
