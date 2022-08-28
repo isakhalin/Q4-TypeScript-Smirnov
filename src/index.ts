@@ -1,26 +1,30 @@
-const getArgs = (): string[] | undefined => {
-    const args = process.argv.slice(2);
+"use strict";
+const readline = require('readline');
 
-    if (args.length) {
-        return args;
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const runTimer = () => rl.question('Установите количество секунд, через которое сработает таймер: ', (time: string): void => {
+    let timeValue: number = +time;
+
+    if (isNaN(timeValue)) {
+        console.log('Необходимо ввести число больше нуля');
+        return runTimer();
     } else {
-        return undefined;
+        console.log(`Вы установили таймер на: ${timeValue} секунд`);
+
+        const timer = setInterval(() => {
+            console.log(`Осталось: ${--timeValue}`);
+        }, (1000));
+
+        setTimeout(() => {
+            clearInterval(timer);
+            console.log('Время вышло');
+            rl.close();
+        }, (timeValue * 1000));
     }
-};
+});
 
-const forEach = <T = any>(array: T[], callback: (value: T) => void) => {
-    array.forEach((value) => callback(value));
-};
-
-const main = () => {
-    const args = getArgs();
-    if (args) {
-        console.log(args);
-        console.log(args.length);
-        forEach<string>(args, console.log);
-    } else {
-        console.log("Вы не передали значения")
-    }
-};
-
-main();
+runTimer();
